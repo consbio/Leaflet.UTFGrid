@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Leaflet UTFGrid Demo</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.1/leaflet.css" />
+    <style>
+        /* from: http://leafletjs.com/examples/choropleth-example.html */
+        .info {
+			padding: 6px 8px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+			background: white;
+			background: rgba(255,255,255,0.8);
+			box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			border-radius: 5px;
+		}
+
+        .leaflet-map-pane canvas {
+            opacity: 0.5 !important;
+        }
+    </style>
+</head>
+<body>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.1/leaflet.js"></script>
+    <script src="//rawgit.com/mapbox/corslite/master/corslite.js" type="text/javascript"></script>
+    <script src="L.UTFGrid.min.js"></script>
+    <div id="map" style="position: absolute; top: 0; left:0; bottom:0; right: 50%;"></div>
+    <div id="map2" style="position: absolute; top: 0; left:50%; bottom:0; right: 0;border-left: 2px solid #AAA;"></div>
+
+    <script>
+         // setup container to display results
+        var InfoBox = L.Control.extend({
+            options: {
+               position: 'topleft',
+               label: ''
+            },
+            onAdd: function(map) {
+                this._container = L.DomUtil.create('div', 'info');
+                L.DomUtil.create('h3', '', this._container).innerHTML = this.options.label;
+                this._div = L.DomUtil.create('div', '', this._container);
+                this.update();
+                return this._container;
+            },
+            update: function(text) {
+                if (text == null){
+                    text = '<h4>Hover over or <br/> click on a state</h4>';
+                }
+                this._div.innerHTML = '<h4>' + text + '</h4>';
+            }
+        });
+
+
+        // Map using UTFGrid
+        var map = L.map('map', {
+            minZoom: 4,
+            maxZoom: 4,
+            zoomControl: false
+        }).setView([40, -96.8], 4);
+        L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var info = new InfoBox({label: 'Standard UTF8 Grid'}).addTo(map);
+
+        // utfgrids generated using: https://github.com/Ecotrust/create-utfgrids and US Census TIGER state boundaries
+        var utfgrid = L.utfGrid('//databasin2-demo.s3.amazonaws.com/github/utfgrids/{z}/{x}/{y}.json');
+        utfgrid.addTo(map);
+
+        utfgrid.on('click', function(e){
+            info.update('CLICK: ' + e.data.NAME);
+        });
+
+        utfgrid.on('mouseover', function(e){
+            info.update('HOVER: ' + e.data.NAME);
+        });
+
+        utfgrid.on('mouseout', function(e){
+            info.update();
+        });
+
+
+        // Map using UTFGridCanvas
+        var map2 = L.map('map2', {
+            minZoom: 4,
+            maxZoom: 4,
+            zoomControl: false
+        }).setView([40, -96.8], 4);
+        L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map2);
+
+        var utfgrid2 = L.utfGridCanvas('//databasin2-demo.s3.amazonaws.com/github/utfgrids/{z}/{x}/{y}.json', {
+            idField: 'NAME'  // The sole property in this UTFGrid is called NAME (state name)
+            // other options:
+            // buildIndex: true  //requires above field to be set properly
+            // fillColor: 'black'
+            // debug: false  // if true, show tile borders and tile keys
+        });
+        utfgrid2.addTo(map2);
+
+        var info2 = new InfoBox({label: 'Canvas UTF8 Grid'}).addTo(map2);
+
+        utfgrid2.on('mouseover', function(e){
+            info2.update('HOVER: ' + e.data.NAME);
+        });
+
+        utfgrid2.on('mouseout', function(e){
+            info2.update();
+        });
+    </script>
+</body>
+</html>
