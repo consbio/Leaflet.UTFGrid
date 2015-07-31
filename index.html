@@ -107,6 +107,10 @@
         utfgrid2.on('mouseout', function(e){
             info2.update();
         });
+
+        utfgrid2.on('click', function(e){
+            info2.update('CLICK: ' + e.data.NAME);
+        });
     </script>
 </body>
 </html>

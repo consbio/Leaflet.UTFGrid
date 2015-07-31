@@ -13,6 +13,8 @@ L.UTFGrid = L.TileLayer.extend({
     _tileCharCode: null, // '<tileKey>:<charCode>' or null
     _cache: null, // {<tileKey>: <utfgrid>}
     _idIndex: null, // {<featureID>: {<tileKey1>: true, ...<tileKeyN>: true} }
+    _throttleMove: null, // holds throttled mousemove handler
+    //_throttleConnectEventHandlers: null, // holds throttled connection setup function
 
     _updateCursor: function(){ }, //no-op, overridden below
 
@@ -22,18 +24,23 @@ L.UTFGrid = L.TileLayer.extend({
 
         L.TileLayer.prototype.onAdd.call(this, map);
 
+        this._throttleMove = L.Util.throttle(this._move, this.options.mouseInterval, this);
+
         if (this.options.pointerCursor) {
             this._updateCursor = function(cursor) { this._container.style.cursor = cursor; }
         }
 
-		map.on('click', this._onClick, this);
-        map.on('mousemove', L.Util.throttle(this._move, this.options.mouseInterval, this), this);
+        map.on('boxzoomstart', this._disconnectMapEventHandlers, this);
+        // have to throttle or we get an immediate click event on boxzoomend
+        map.on('boxzoomend', this._throttleConnectEventHandlers, this);
+        this._connectMapEventHandlers();
 	},
 
 	onRemove: function () {
 		var map = this._map;
-		map.off('click', this._onClick, this);
-		map.off('mousemove', this._move, this);
+        map.off('boxzoomstart', this._disconnectMapEventHandlers, this);
+        map.off('boxzoomend', this._throttleConnectEventHandlers, this);
+        this._disconnectMapEventHandlers();
 		this._updateCursor('');
         L.TileLayer.prototype.onRemove.call(this, map);
 	},
@@ -42,6 +49,20 @@ L.UTFGrid = L.TileLayer.extend({
         this._loadTile(coords);
         return document.createElement('div');  // empty DOM node, required because this overrides L.TileLayer
 	},
+
+    _connectMapEventHandlers: function(){
+        this._map.on('click', this._onClick, this);
+        this._map.on('mousemove', this._throttleMove, this);
+    },
+
+    _disconnectMapEventHandlers: function(){
+        this._map.off('click', this._onClick, this);
+		this._map.off('mousemove', this._throttleMove, this);
+    },
+
+    _throttleConnectEventHandlers: function() {
+        setTimeout(this._connectMapEventHandlers.bind(this), 100);
+    },
 
     _update: function (center, zoom) {
         L.TileLayer.prototype._update.call(this, center, zoom);

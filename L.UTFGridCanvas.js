@@ -12,8 +12,6 @@ L.UTFGridCanvas = L.UTFGrid.extend({
         this._adjacentTiles = [];
 
         L.UTFGrid.prototype.onAdd.call(this, map);
-		this.on('mouseover', this._handleMouseOver, this);
-        this.on('mouseout', this._handleMouseOut, this);
 	},
 
     createTile: function(coords) {
@@ -28,6 +26,18 @@ L.UTFGridCanvas = L.UTFGrid.extend({
 
         return tile;
 	},
+
+    _connectMapEventHandlers: function(){
+        L.UTFGrid.prototype._connectMapEventHandlers.call(this);
+        this.on('mouseover', this._handleMouseOver, this);
+        this.on('mouseout', this._handleMouseOut, this);
+    },
+
+    _disconnectMapEventHandlers: function(){
+        L.UTFGrid.prototype._disconnectMapEventHandlers.call(this);
+        this.off('mouseover', this._handleMouseOver, this);
+        this.off('mouseout', this._handleMouseOut, this);
+    },
 
     _handleMouseOver: function (e) {
         if (e._tile == null || e._tileCharCode == null){ return }
