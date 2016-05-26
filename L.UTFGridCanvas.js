@@ -134,6 +134,17 @@ L.UTFGridCanvas = L.UTFGrid.extend({
                 }
             }
         }
+
+	//Blur effect copied from glower - https://github.com/cutting-room-floor/glower/blob/mb-pages/src/glower.js#L108	
+	ctx.globalAlpha = 0.7;
+        ctx.globalCompositeOperation = 'lighter';
+	var a = 1;
+        ctx.drawImage(canvas, -a, -a);
+        ctx.drawImage(canvas, a, a);
+        ctx.drawImage(canvas, 0, -a);
+        ctx.drawImage(canvas, -a, 0);
+        ctx.globalAlpha = 1;	
+	
     },
 
     _resetTile: function(tileKey) {
