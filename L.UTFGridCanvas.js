@@ -3,6 +3,7 @@ L.UTFGridCanvas = L.UTFGrid.extend({
         idField: 'ID',  // Expects UTFgrid to have a property 'ID' that indicates the feature ID
         buildIndex: true,  //requires above field to be set properly
         fillColor: 'black',
+	shadowBlur: 1,
         debug: false  // if true, show tile borders and tile keys
     },
 
@@ -134,7 +135,11 @@ L.UTFGridCanvas = L.UTFGrid.extend({
                 }
             }
         }
-
+	
+        //Add a shadow effect
+	ctx.shadowBlur=this.options.shadowBlur;
+	ctx.shadowColor=this.options.fillColor;
+	
 	//Blur effect copied from glower - https://github.com/cutting-room-floor/glower/blob/mb-pages/src/glower.js#L108	
 	ctx.globalAlpha = 0.7;
         ctx.globalCompositeOperation = 'lighter';
