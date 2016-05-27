@@ -1,9 +1,10 @@
 L.UTFGridCanvas = L.UTFGrid.extend({
 	options: {
         idField: 'ID',  // Expects UTFgrid to have a property 'ID' that indicates the feature ID
-        buildIndex: true,  //requires above field to be set properly
+        buildIndex: true,  // requires above field to be set properly
         fillColor: 'black',
-	shadowBlur: 1,
+	    shadowBlur: 0,  // Number of pixels for blur effect
+        shadowColor: null,  // Color for shadow, if present.  Defaults to fillColor.
         debug: false  // if true, show tile borders and tile keys
     },
 
@@ -135,20 +136,10 @@ L.UTFGridCanvas = L.UTFGrid.extend({
                 }
             }
         }
-	
-        //Add a shadow effect
-	ctx.shadowBlur=this.options.shadowBlur;
-	ctx.shadowColor=this.options.fillColor;
-	
-	//Blur effect copied from glower - https://github.com/cutting-room-floor/glower/blob/mb-pages/src/glower.js#L108	
-	ctx.globalAlpha = 0.7;
-        ctx.globalCompositeOperation = 'lighter';
-	var a = 1;
-        ctx.drawImage(canvas, -a, -a);
-        ctx.drawImage(canvas, a, a);
-        ctx.drawImage(canvas, 0, -a);
-        ctx.drawImage(canvas, -a, 0);
-        ctx.globalAlpha = 1;	
+
+        if (this.options.shadowBlur) {
+            this._addShadow(canvas, ctx);
+        }
 	
     },
 
@@ -176,6 +167,21 @@ L.UTFGridCanvas = L.UTFGrid.extend({
         ctx.lineTo(0, 255);
         ctx.closePath();
         ctx.stroke();
+    },
+
+    _addShadow: function(canvas, ctx) {
+        ctx.shadowBlur = this.options.shadowBlur;
+        ctx.shadowColor = this.options.shadowColor || this.options.fillColor;
+
+        //Blur effect copied from glower - https://github.com/cutting-room-floor/glower/blob/mb-pages/src/glower.js#L108
+        ctx.globalAlpha = 0.7;
+        ctx.globalCompositeOperation = 'lighter';
+        var a = 1;
+        ctx.drawImage(canvas, -a, -a);
+        ctx.drawImage(canvas, a, a);
+        ctx.drawImage(canvas, 0, -a);
+        ctx.drawImage(canvas, -a, 0);
+        ctx.globalAlpha = 1;
     }
 });
 
