@@ -57,9 +57,11 @@ Using ```<canvas>``` tiles:
 
 ```
 var utfgrid = L.utfGridCanvas(url, {
-    idField: 'ID'  // The sole property in this UTFGrid is called NAME (state name)
-    buildIndex: true  //requires above field to be set properly
-    fillColor: 'black'
+    idField: 'ID',  // Expects UTFgrid to have a property 'ID' that indicates the feature ID
+    buildIndex: true,  // requires above field to be set properly
+    fillColor: 'black',
+    shadowBlur: 0,  // Number of pixels for blur effect
+    shadowColor: null,  // Color for shadow, if present.  Defaults to fillColor.
     debug: false  // if true, show tile borders and tile keys
 });
 ```
@@ -72,3 +74,8 @@ Core implementation of UTFGrid based on ideas from [Leaflet.utfgrid](https://git
 heavily modified to extend Leaflet's builtin ```L.TileLayer```.
 
 Canvas implementation inspired by [Mapbox Glower](https://github.com/mapbox/glower). 
+
+
+## Contributors:
+ * [Brendan Ward](https://github.com/brendan-ward)
+ * [gusmacaulay](https://github.com/gusmacaulay)
