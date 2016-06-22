@@ -13,7 +13,7 @@ See the [example](//consbio.github.io/Leaflet.UTFGrid).
 *Only supports Leaflet 1.0*  
 (tested on Leaflet 1.0 beta 1). 
 
-Note: only supports browsers that provide ```<canvas>```. 
+Note: only supports browsers that provide [canvas](http://caniuse.com/#search=canvas). 
 
 
 
