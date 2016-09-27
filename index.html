@@ -66,6 +66,7 @@
         utfgrid.addTo(map);
 
         utfgrid.on('click', function(e){
+            if (!e.data) return;
             info.update('CLICK: ' + e.data.NAME);
         });
 
@@ -102,6 +103,7 @@
         var info2 = new InfoBox({label: 'Canvas UTF8 Grid'}).addTo(map2);
 
         utfgrid2.on('mouseover', function(e){
+            if (!e.data) return;
             info2.update('HOVER: ' + e.data.NAME);
         });
 
@@ -110,6 +112,7 @@
         });
 
         utfgrid2.on('click', function(e){
+            if (!e.data) return;
             info2.update('CLICK: ' + e.data.NAME);
         });
     </script>

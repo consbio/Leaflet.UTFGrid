@@ -121,6 +121,8 @@ L.UTFGrid = L.TileLayer.extend({
 	},
 
 	_objectForEvent: function (e) {
+	    if (!e.latlng) return;  // keyboard <ENTER> events also pass through as click events but don't have latlng
+
         var map = this._map,
 		    point = map.project(e.latlng),
 		    tileSize = this.options.tileSize,

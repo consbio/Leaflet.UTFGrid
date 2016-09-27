@@ -1,6 +1,6 @@
 {
   "name": "leaflet-utfgrid",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "UTF-8 Grid Layer for Leaflet",
   "homepage": "http://github.com/consbio/Leaflet.UTFGrid",
   "author": {
