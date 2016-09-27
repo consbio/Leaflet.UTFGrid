@@ -1,0 +1,25 @@
+{
+  "name": "leaflet-utfgrid",
+  "version": "0.2.0",
+  "description": "UTF-8 Grid Layer for Leaflet",
+  "homepage": "http://github.com/consbio/Leaflet.UTFGrid",
+  "author": {
+    "name": "Brendan Ward",
+    "email": "bcward@consbio.org"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-minify": "0.0.14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/consbio/Leaflet.UTFGrid"
+  },
+  "keywords": [
+    "leaflet"
+  ],
+  "dependencies": {
+    "corslite": "0.0.7"
+  }
+}
