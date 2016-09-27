@@ -10,8 +10,7 @@ feature, not just the portion of it within a single tile.
 
 See the [example](//consbio.github.io/Leaflet.UTFGrid).
 
-*Only supports Leaflet 1.0*  
-(tested on Leaflet 1.0 beta 1). 
+*Only supports Leaflet 1.0*   
 
 Note: only supports browsers that provide ```<canvas>```. 
 
@@ -20,13 +19,13 @@ Note: only supports browsers that provide ```<canvas>```.
 
 ## Usage
 
-Requires [corslite](https://github.com/mapbox/corslite/).
+Requires [corslite](https://github.com/mapbox/corslite/).  This is included in `L.UTFGrid-min.js`
 
 
 Include the JavaScript:
 
 ```
-<script src="L.UTFGrid.min.js"></script>
+<script src="L.UTFGrid-min.js"></script>
 ```
 
 Example usage:
