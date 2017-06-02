@@ -78,3 +78,4 @@ Canvas implementation inspired by [Mapbox Glower](https://github.com/mapbox/glow
 ## Contributors:
  * [Brendan Ward](https://github.com/brendan-ward)
  * [gusmacaulay](https://github.com/gusmacaulay)
+ * [Javier Villafuerte](https://github.com/jvillafuerte)
