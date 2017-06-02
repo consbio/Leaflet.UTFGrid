@@ -50,6 +50,11 @@ L.UTFGrid = L.TileLayer.extend({
         return document.createElement('div');  // empty DOM node, required because this overrides L.TileLayer
 	},
 
+    setUrl: function(url, noRedraw) {
+        this._cache = [];
+        return L.TileLayer.prototype.setUrl.call(this, url, noRedraw);
+    },
+
     _connectMapEventHandlers: function(){
         this._map.on('click', this._onClick, this);
         this._map.on('mousemove', this._throttleMove, this);
