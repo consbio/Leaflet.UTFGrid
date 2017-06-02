@@ -51,7 +51,7 @@ L.UTFGrid = L.TileLayer.extend({
 	},
 
     setUrl: function(url, noRedraw) {
-        this._cache = [];
+        this._cache = {};
         return L.TileLayer.prototype.setUrl.call(this, url, noRedraw);
     },
 
