@@ -15,6 +15,12 @@ See the [example](//consbio.github.io/Leaflet.UTFGrid).
 Note: only supports browsers that provide [canvas](http://caniuse.com/#search=canvas). 
 
 
+## Install
+
+```
+npm install leaflet-utfgrid
+```
+
 
 
 ## Usage
