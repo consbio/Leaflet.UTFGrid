@@ -8,8 +8,6 @@ Provides a [UTFGrid](https://github.com/mapbox/utfgrid-spec) implementation for 
 feature, not just the portion of it within a single tile.
  
 
-See the [example](//consbio.github.io/Leaflet.UTFGrid).
-
 *Only supports Leaflet >= 1.0*   
 
 Note: only supports browsers that provide [canvas](http://caniuse.com/#search=canvas). 
